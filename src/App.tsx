@@ -1,9 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import TaskLine from './components/TaskLine';
 import Task from './models/Task';
 import TaskList from './components/TaskList';
+import TaskEdit from './components/TaskEdit';
+import Todolist from './components/Todolist';
 
 function App() {
 
@@ -25,9 +26,11 @@ function App() {
     ); 
     
   return (
-    <TaskList>
-      {taskList}
-    </TaskList>
+    <Todolist>
+      <TaskList>
+        {taskList}
+      </TaskList>
+    </Todolist>
   );
 }
 

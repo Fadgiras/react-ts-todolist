@@ -10,7 +10,7 @@ interface TaskProps{
 
 export default class Task extends Component<TaskProps,any>{
     render() {
-        return <div id={this.props.id.toString()} className='bg-gray-500 rounded pr-2'>
+        return <div id={this.props.id.toString()} className='bg-gray-500 rounded pr-2 shadow-md  '>
                     <div className="flex flex-row">
                         <p className='m-2 p-2 bg-gray-400 bg-opacity-80 w-1/5 rounded align-middle break-words'>
                             {this.props.name}
@@ -26,7 +26,7 @@ export default class Task extends Component<TaskProps,any>{
 
                                 {/* Check */}
                                 <button type="button"
-                                        className="w-fit text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-0.5 m-1 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        className="w-fit text-gray-400 bg-transparent rounded-lg text-sm p-0.5 m-1 inline-flex items-center hover:bg-gray-600 hover:text-white"
                                         >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" stroke="" fill="" viewBox="0 0 24 24">
                                         <path d="M20.303 4.846l.882.882-12.22 12.452-6.115-5.93.902-.902 5.303 5.028 11.248-11.53zm-.018-2.846l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285-3.715-3.715z"/>
@@ -35,7 +35,7 @@ export default class Task extends Component<TaskProps,any>{
 
                                 {/* edit */}
                                 <button type="button"
-                                        className="w-fit text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-0.5 m-1 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        className="w-fit text-gray-400 bg-transparent rounded-lg text-sm p-0.5 m-1 inline-flex items-center hover:bg-gray-600 hover:text-white"
                                         >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#333333" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-edit-3">
                                             <path d="M12 20h9" fill="black"></path>
@@ -45,7 +45,7 @@ export default class Task extends Component<TaskProps,any>{
 
                                 {/* bin */}
                                 <button type="button"
-                                        className="w-fit text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-0.5 m-1 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        className="w-fit text-gray-400 bg-transparent rounded-lg text-sm p-0.5 m-1 inline-flex items-center hover:bg-gray-600 hover:text-white"
                                         >
                                     <svg aria-hidden="true" className="w-5 h-5" fill="black" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
