@@ -46,8 +46,8 @@ export default class Task{
         date = this.date
     }
 
-    getDesc() : string|null{
-        return this.desc
+    getDesc() : string{
+        return this.desc ? this.desc : "No description provided"
     }
 
     setDesc(desc: string|null){
