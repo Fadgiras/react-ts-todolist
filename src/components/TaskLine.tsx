@@ -25,7 +25,7 @@ export default class TaskLine extends Component<TaskProps,any>{
                                 <button type="button"
                                         className="w-fit text-gray-400 bg-transparent rounded-lg text-sm p-0.5 m-1 inline-flex items-center hover:bg-gray-600 hover:text-white"
                                         >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" stroke="" fill="" viewBox="0 0 24 24">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                         <path d="M20.303 4.846l.882.882-12.22 12.452-6.115-5.93.902-.902 5.303 5.028 11.248-11.53zm-.018-2.846l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285-3.715-3.715z"/>
                                     </svg>
                                 </button>
@@ -34,7 +34,7 @@ export default class TaskLine extends Component<TaskProps,any>{
                                 <button type="button"
                                         className="w-fit text-gray-400 bg-transparent rounded-lg text-sm p-0.5 m-1 inline-flex items-center hover:bg-gray-600 hover:text-white"
                                         >
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#333333" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-edit-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#333333" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-edit-3">
                                             <path d="M12 20h9" fill="black"></path>
                                             <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" fill="#4d4d4d"></path>
                                         </svg>

@@ -1,10 +1,11 @@
-import React from 'react';
+import React , {useState} from 'react';
 import './App.css';
 import TaskLine from './components/TaskLine';
 import Task from './models/Task';
 import TaskList from './components/TaskList';
 import TaskEdit from './components/TaskEdit';
 import Todolist from './components/Todolist';
+import TaskDeleteConfirm from './components/TaskDeleteConfirm';
 
 function App() {
 
@@ -15,12 +16,16 @@ function App() {
     var task3 = new Task(3,"AAAAAAAAAAAAAAAAAAA","cat2","09/11/2023","Je sais pas quoi marquer x3");
     var tasks: Task[] = [task1, task2, task3];
     const taskList = tasks.map((task) => (<TaskLine task={task}/>)); 
+
+    const defaultTask = new Task(0, "I'm a dummy task", "dummyCat", "01/01/1900", "Dummy desc")
+
     
   return (
     <Todolist>
       <TaskList>
         {taskList}
       </TaskList>
+      <TaskEdit task={task1}/>
     </Todolist>
   );
 }
