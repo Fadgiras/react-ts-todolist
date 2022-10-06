@@ -1,11 +1,22 @@
 import React, { Component } from "react";
 import Task from "../models/Task";
+import EditState from "./Todolist";
 
 interface TaskProps{
     task : Task
+    toggleEdit : Function,
+    toggleDelete : Function
+    
 }
 
-export default class TaskLine extends Component<TaskProps,any>{
+export default class TaskLine extends Component<TaskProps,EditState>{
+    constructor(props: TaskProps) {
+        super(props);        
+      }
+
+    toggleEdit = () => {this.props.toggleEdit()}
+    toggleDelete = () => {this.props.toggleDelete()}
+
     render() {
         return <div id={this.props.task.getId().toString()} className='bg-gray-500 rounded pr-2 shadow-md  '>
                     <div className="flex flex-row">
@@ -33,6 +44,7 @@ export default class TaskLine extends Component<TaskProps,any>{
                                 {/* edit */}
                                 <button type="button"
                                         className="w-fit text-gray-400 bg-transparent rounded-lg text-sm p-0.5 m-1 inline-flex items-center hover:bg-gray-600 hover:text-white"
+                                        onClick={this.toggleEdit}
                                         >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#333333" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-edit-3">
                                             <path d="M12 20h9" fill="black"></path>
@@ -43,6 +55,7 @@ export default class TaskLine extends Component<TaskProps,any>{
                                 {/* bin */}
                                 <button type="button"
                                         className="w-fit text-gray-400 bg-transparent rounded-lg text-sm p-0.5 m-1 inline-flex items-center hover:bg-gray-600 hover:text-white"
+                                        onClick={this.toggleDelete}
                                         >
                                     <svg aria-hidden="true" className="w-5 h-5" fill="black" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
