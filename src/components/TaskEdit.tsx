@@ -1,61 +1,52 @@
 import React, { Component } from "react";
 import Task from "../models/Task";
-import EditState from "./Todolist";
 
 
 interface TaskProps{
     task : Task, 
     isOpen : boolean
-    toggleFn : Function
+    toggleFn : Function,
+    EditMode : boolean
 }
 
-function dateFormat(string : string){
-            let str = string.split('/')
-            return str[2]+"-"+str[1]+"-"+str[0]
-        }
 
 export default class TaskEdit extends Component<TaskProps, any>{
     constructor(props: TaskProps) {
         super(props);
-        // TODO use EditState and use thoses lines below to replace current local state with the global one
-
-        // this.setState({date : dateFormat(this.props.task.getDate())})
-        // this.setState({open : true})
-        // this.setState({id : this.props.task.getId()})
-
         this.state = {
-            date: dateFormat(this.props.task.getDate())            
+            date: this.props.task.getDate()            
         };
       }
-      
-    //TODO Format the date at the display - not the DB
+
     handleDateChange = (Event: { target: any; }) =>{
         this.setState({date : Event.target.value})
-        console.log(Event.target.value)
     }
     
     toggle = () => {this.props.toggleFn()}
 
+    modeSwitch(){
+        return this.props.EditMode ? "Edit Task" : "Add Task"
+    }
+    
     render(): React.ReactNode {
-
         return <div> 
             {this.props.isOpen ? 
                 <div className="fixed overflow-y-auto">
                 <div className="fixed flex w-screen h-screen bg-gray-300 opacity-60"/>
                 <div className="fixed bottom-0 top-0 left-0 right-0 m-auto flex w-1/2 bg-gray-400 h-fit rounded shadow-lg shadow-blue-800 flex flex-col items-center">
-                    <p className="mr-auto pt-2 pl-4 pb-4 text-bold text-xl">Task Edit : {this.props.task.getName()}</p>
+                    <p className="mr-auto pt-2 pl-4 pb-4 text-bold text-xl"> {this.modeSwitch()} : {this.props.task.getName()}</p>
                     <div className="w-2/3">
-                        <p className="pl-2 pt-2">Task name : </p>
+                        <p className="pl-2 pt-2">Task Name : </p>
                         <input type="text" className="m-2 ring-2 pl-2 rounded border-black w-full" placeholder={this.props.task.getName()}/>
                         
                         <p className="pl-2 pt-2">Task Category :</p>
                         <input type="text" className="m-2 ring-2 pl-2 rounded border-black w-full" placeholder={this.props.task.getCat()}/>
                         
-                        <p className="pl-2 pt-2">Task name : </p>
+                        <p className="pl-2 pt-2">Task Description : </p>
                         <textarea className="m-2 ring-2 pl-2 rounded border-black resize w-full" placeholder={this.props.task.getDesc()}/>
 
                         <p className="pl-2 pt-2">Task Date : </p>
-                        {/* use state to change value */}
+                        {/* Day's date displayed because of the defaultTask object in Todolist.tsx */}
                         <input type="date" value={this.state.date} className="m-2 ring-2 pl-2 rounded border-black w-fit" onChange={this.handleDateChange }/>
                     </div>
                     <button type="button"
