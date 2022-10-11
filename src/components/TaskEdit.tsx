@@ -28,7 +28,7 @@ export default class TaskEdit extends Component<TaskProps, any>{
         };
       }
       
-
+    //TODO Format the date at the display - not the DB
     handleDateChange = (Event: { target: any; }) =>{
         this.setState({date : Event.target.value})
         console.log(Event.target.value)

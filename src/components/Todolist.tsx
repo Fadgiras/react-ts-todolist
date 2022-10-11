@@ -18,7 +18,8 @@ import TaskList from "./TaskList";
 
 interface EditState{
     isOpenEdit : boolean,
-    isOpenDelete : boolean
+    isOpenDelete : boolean,
+    currentTask : Task
 }
 
 export default class Todolist extends Component<any, EditState>{
@@ -26,28 +27,34 @@ export default class Todolist extends Component<any, EditState>{
         super(props);
         this.state = {
             isOpenEdit : false,
-            isOpenDelete : false           
+            isOpenDelete : false,
+            currentTask : defaultTask           
         };
       }
+
+        setCurrentTask(task: Task){
+            this.setState({currentTask : task})
+        }
+
         toggleEdit(){
-            console.log(this.state.isOpenEdit)
-            this.setState({isOpenEdit : !this.state.isOpenEdit}, () => console.log(this.state.isOpenEdit))
+            this.setState({isOpenEdit : !this.state.isOpenEdit})
         }
 
         toggleDelete(){
-            console.log(this.state.isOpenDelete)
-            this.setState({isOpenDelete : !this.state.isOpenDelete}, () => console.log(this.state.isOpenDelete))
+            this.setState({isOpenDelete : !this.state.isOpenDelete})
         }
 
-    taskList = tasks.map((task) => (<TaskLine task={task} toggleEdit = {this.toggleEdit.bind(this)} toggleDelete={this.toggleDelete.bind(this)} />));
+    taskList = tasks.map((task) => (<TaskLine task={task} toggleEdit = {this.toggleEdit.bind(this)} toggleDelete={this.toggleDelete.bind(this)} setCurrentTask={this.setCurrentTask.bind(this)}/>));
+
+    
 
     render(): React.ReactNode {
         return  <div>
                     <TaskList>
                         {this.taskList}
                     </TaskList>
-                    <TaskEdit task={task1} isOpen={this.state.isOpenEdit} toggleFn = {this.toggleEdit.bind(this)}/>
-                    <TaskDeleteConfirm task={task1} isOpen={this.state.isOpenDelete} toggleFn = {this.toggleDelete.bind(this)}/>
+                    <TaskEdit task={this.state.currentTask} isOpen={this.state.isOpenEdit} toggleFn = {this.toggleEdit.bind(this)}/>
+                    <TaskDeleteConfirm task={this.state.currentTask} isOpen={this.state.isOpenDelete} toggleFn = {this.toggleDelete.bind(this)}/>
                 </div>
     }
 }

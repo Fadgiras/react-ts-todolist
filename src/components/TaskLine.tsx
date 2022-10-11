@@ -5,7 +5,8 @@ import EditState from "./Todolist";
 interface TaskProps{
     task : Task
     toggleEdit : Function,
-    toggleDelete : Function
+    toggleDelete : Function,
+    setCurrentTask : Function
     
 }
 
@@ -14,8 +15,16 @@ export default class TaskLine extends Component<TaskProps,EditState>{
         super(props);        
       }
 
-    toggleEdit = () => {this.props.toggleEdit()}
-    toggleDelete = () => {this.props.toggleDelete()}
+      toggleDel(){
+        this.props.setCurrentTask(this.props.task) 
+        this.props.toggleDelete()
+      }
+
+      toggleEd(){
+        this.props.setCurrentTask(this.props.task)
+
+        this.props.toggleEdit()
+      }
 
     render() {
         return <div id={this.props.task.getId().toString()} className='bg-gray-500 rounded pr-2 shadow-md  '>
@@ -44,7 +53,7 @@ export default class TaskLine extends Component<TaskProps,EditState>{
                                 {/* edit */}
                                 <button type="button"
                                         className="w-fit text-gray-400 bg-transparent rounded-lg text-sm p-0.5 m-1 inline-flex items-center hover:bg-gray-600 hover:text-white"
-                                        onClick={this.toggleEdit}
+                                        onClick={() => this.toggleEd()}
                                         >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#333333" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-edit-3">
                                             <path d="M12 20h9" fill="black"></path>
@@ -53,9 +62,10 @@ export default class TaskLine extends Component<TaskProps,EditState>{
                                 </button>
 
                                 {/* bin */}
-                                <button type="button"
+                                <button 
+                                type="button"
                                         className="w-fit text-gray-400 bg-transparent rounded-lg text-sm p-0.5 m-1 inline-flex items-center hover:bg-gray-600 hover:text-white"
-                                        onClick={this.toggleDelete}
+                                        onClick={() => this.toggleDel()}
                                         >
                                     <svg aria-hidden="true" className="w-5 h-5" fill="black" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
