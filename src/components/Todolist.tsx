@@ -4,7 +4,7 @@ import TaskDeleteConfirm from "./TaskDeleteConfirm";
 import TaskEdit from "./TaskEdit";
 import TaskLine from "./TaskLine";
 import TaskList from "./TaskList";
-import StorageService from "../services/storageService";
+import StorageService from "../services/StorageService";
 import moment from "moment";
 
    
