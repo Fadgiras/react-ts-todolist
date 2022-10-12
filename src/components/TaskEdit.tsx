@@ -18,6 +18,18 @@ export default class TaskEdit extends Component<TaskProps, any>{
         };
       }
 
+    componentDidMount() {
+    // Runs after the first render() lifecycle
+        console.log("Did mount called " + this.props.task.getDate());
+        this.setState({date : this.props.task.getDate()})
+        this.forceUpdate()
+    }
+
+    componentDidUpdate(prevProps: Readonly<TaskProps>, prevState: Readonly<any>, snapshot?: any): void {
+        console.log("Update !")
+    }
+
+
     handleDateChange = (Event: { target: any; }) =>{
         this.setState({date : Event.target.value})
     }

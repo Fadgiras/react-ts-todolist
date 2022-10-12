@@ -23,12 +23,13 @@ export default class TaskLine extends Component<TaskProps,EditState>{
         this.props.setCurrentTask(task)
         this.props.editModeFn(true)
         this.props.toggleEdit()
+        this.forceUpdate()
     }
 
     render() {
-        return <div className='bg-gray-500 rounded pr-2 shadow-md  '>
+        return <div id={this.props.task.getId().toString()} className='bg-gray-500 rounded pr-2 shadow-md  '>
                     <div className="flex flex-row">
-                        <p className='m-2 p-2 bg-gray-400 bg-opacity-80 w-1/5 rounded align-middle break-words'>
+                        <p className='m-2 p-2 bg-gray-400 bg-opacity-80 w-1/5 rounded align-middle break-all'>
                             {this.props.task.getName()}
                         </p>
                         <div className="w-full flex flex-col">
