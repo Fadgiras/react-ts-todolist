@@ -20,4 +20,8 @@ export default class StorageService {
     public getTasks(){
         return this.tasks
     }
+
+    public editTask(task : Task){
+        localStorage.setItem(task.getId().toString(), JSON.stringify(task))
+    }
 }

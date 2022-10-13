@@ -5,13 +5,12 @@ export default class Task{
     private date: string;
     private desc: string | null;
 
-    // maybe add desc field
     constructor(id: number, name: string, cat: string, date: string, desc: string|null){
-        this.id = id,
-        this.name = name,
-        this.cat = cat,
-        this.date = date,
-        this.desc = desc
+        this.id = id;
+        this.name = name;
+        this.cat = cat;
+        this.date = date;
+        this.desc = desc;
     }
 
     getId() : number{
@@ -19,7 +18,7 @@ export default class Task{
     }
 
     setId(id: number){
-        id = this.id
+        this.id = id
     }
 
     getName() : string{
@@ -27,7 +26,7 @@ export default class Task{
     }
 
     setName(name: string){
-        name = this.name
+        this.name = name
     }
 
     getCat() : string{
@@ -35,7 +34,7 @@ export default class Task{
     }
 
     setCat(cat: string){
-        cat = this.cat
+        this.cat = cat
     }
 
     getDate() : string{
@@ -43,7 +42,7 @@ export default class Task{
     }
 
     setDate(date: string){
-        date = this.date
+        this.date = date
     }
 
     getDesc() : string{
@@ -51,7 +50,11 @@ export default class Task{
     }
 
     setDesc(desc: string|null){
-        desc = this.desc
+        this.desc = desc
+    }
+
+    taskKey(){
+        return this.id.toString()+this.name+ this.cat+this.date+this.desc
     }
 
     return() {

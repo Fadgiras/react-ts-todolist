@@ -17,6 +17,7 @@ export default class TaskLine extends Component<TaskProps,EditState>{
     toggleDel(task : Task){
         this.props.setCurrentTask(task) 
         this.props.toggleDelete()
+        this.forceUpdate()
     }
 
     toggleEd(task : Task){
@@ -25,20 +26,21 @@ export default class TaskLine extends Component<TaskProps,EditState>{
         this.props.toggleEdit()
         this.forceUpdate()
     }
+    componentDidUpdate(prevProps: Readonly<TaskProps>, prevState: Readonly<EditState>, snapshot?: any): void {
+        console.log("TLine")
+    }
 
     render() {
-        return <div id={this.props.task.getId().toString()} className='bg-gray-500 rounded pr-2 shadow-md  '>
+        return <div id={this.props.task.getId().toString()} className='bg-gray-500 rounded pr-2 shadow-md font-sans'>
                     <div className="flex flex-row">
-                        <p className='m-2 p-2 bg-gray-400 bg-opacity-80 w-1/5 rounded align-middle break-all'>
+                        <p className='flex m-2 p-2 bg-gray-400 bg-opacity-80 w-32 rounded align-middle break-words break-all'>
                             {this.props.task.getName()}
                         </p>
                         <div className="w-full flex flex-col">
-                            <p className="mt-2 p-2 bg-gray-400 rounded w-full h-screen max-h-16 break-words">
-                                {this.props.task.getDesc()}
-                            </p>
+                            <textarea value={this.props.task.getDesc()}  className="mt-2 p-2 bg-gray-400 rounded w-full break-words h-20 resize-y outline outline-0 focus:outline-0" readOnly/>
                             <div className="flex">
                                 <div className="m-2 ml-0 p-2 mr-auto bg-gray-400 rounded w-fit break-words">
-                                    <p className=""> Dead line : {moment(this.props.task.getDate(), "YYYY-MM-DD").format("DD/MM/YYYY")}</p>
+                                    <p className=""> Dead line : {moment(this.props.task.getDate(),"YYYY-MM-DD").format("DD/MM/YYYY")}</p>
                                 </div>
 
                                 {/* Check */}

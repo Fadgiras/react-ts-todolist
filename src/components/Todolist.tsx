@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Children, Component } from "react";
 import Task from "../models/Task";
 import TaskDeleteConfirm from "./TaskDeleteConfirm";
 import TaskEdit from "./TaskEdit";
@@ -17,6 +17,7 @@ interface EditState{
     isOpenDelete : boolean,
     currentTask : Task,
     editMode : boolean
+    // Add a mode state
 }
 
 export default class Todolist extends Component<any, EditState>{
@@ -28,6 +29,11 @@ export default class Todolist extends Component<any, EditState>{
             currentTask : defaultTask,
             editMode : false
         };        
+      }
+
+      componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<EditState>, snapshot?: any): void {
+          console.log("TodoList")
+          //Refresh children here          
       }
 
     setCurrentTask(task: Task){
@@ -46,17 +52,12 @@ export default class Todolist extends Component<any, EditState>{
         this.setState({isOpenDelete : !this.state.isOpenDelete})
     }
 
-    //NB : instanciate a new obj to acces a task
+    //NB : instanciate a new obj to access a task
     tasks = new StorageService().getTasks()
 
-    taskList = this.tasks.map((task) => (<TaskLine task={task} toggleEdit = {this.toggleEdit.bind(this)} toggleDelete={this.toggleDelete.bind(this)} setCurrentTask={this.setCurrentTask.bind(this)} editModeFn={this.setMode.bind(this)}/>));
+    taskList = this.tasks.map((task) => (<TaskLine key={task.getName()} task={task} toggleEdit = {this.toggleEdit.bind(this)} toggleDelete={this.toggleDelete.bind(this)} setCurrentTask={this.setCurrentTask.bind(this)} editModeFn={this.setMode.bind(this)}/>));
 
-    saveData = () =>{
-        this.tasks.map((task)=>(localStorage.setItem(task.getId().toString(), JSON.stringify(task))));
-    };
-
-
-
+    
     render(){
         return  <div>
                     <TaskList task={defaultTask} isOpen={this.state.isOpenEdit} toggleFn = {this.toggleEdit.bind(this)} setCurrentTask={this.setCurrentTask.bind(this)} editModeFn={this.setMode.bind(this)}>
@@ -64,10 +65,7 @@ export default class Todolist extends Component<any, EditState>{
                     </TaskList>
                     <TaskEdit task={this.state.currentTask} isOpen={this.state.isOpenEdit} toggleFn = {this.toggleEdit.bind(this)} EditMode={this.state.editMode}/>
                     <TaskDeleteConfirm task={this.state.currentTask} isOpen={this.state.isOpenDelete} toggleFn = {this.toggleDelete.bind(this)}/>
-                    <div>
-                        <button onClick={this.saveData}>Save!</button>
-                        <p>{this.tasks.toString()}</p>
-                    </div>
+                    {/* TODO Add an add compo or handle well edit compo */}
                 </div>
     }
-}
+  }
