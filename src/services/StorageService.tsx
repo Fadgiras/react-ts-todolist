@@ -24,4 +24,12 @@ export default class StorageService {
     public editTask(task : Task){
         localStorage.setItem(task.getId().toString(), JSON.stringify(task))
     }
+    public addTask(task : Task){
+        //Yeah, they do the same, just to avoid confusion
+        this.editTask(task)
+    }
+
+    public deleteTask(task : Task){
+        localStorage.removeItem(task.getId().toString())
+    }
 }

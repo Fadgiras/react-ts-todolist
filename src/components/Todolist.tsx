@@ -16,7 +16,8 @@ interface EditState{
     isOpenEdit : boolean,
     isOpenDelete : boolean,
     currentTask : Task,
-    editMode : boolean
+    editMode : boolean,
+    mode : string
     // Add a mode state
 }
 
@@ -27,17 +28,17 @@ export default class Todolist extends Component<any, EditState>{
             isOpenEdit : false,
             isOpenDelete : false,
             currentTask : defaultTask,
-            editMode : false
+            editMode : false, 
+            mode: "List"
         };        
-      }
-
-      componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<EditState>, snapshot?: any): void {
-          console.log("TodoList")
-          //Refresh children here          
-      }
+    }
 
     setCurrentTask(task: Task){
         this.setState({currentTask : task})
+    }
+
+    switchMode(CurrentMode : string){
+        this.setState({mode : CurrentMode})
     }
 
     setMode(edit : boolean){
@@ -54,18 +55,23 @@ export default class Todolist extends Component<any, EditState>{
 
     //NB : instanciate a new obj to access a task
     tasks = new StorageService().getTasks()
+    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<EditState>, snapshot?: any): void {
+        this.tasks = new StorageService().getTasks()
+    }
 
-    taskList = this.tasks.map((task) => (<TaskLine key={task.getName()} task={task} toggleEdit = {this.toggleEdit.bind(this)} toggleDelete={this.toggleDelete.bind(this)} setCurrentTask={this.setCurrentTask.bind(this)} editModeFn={this.setMode.bind(this)}/>));
+    taskList = this.tasks.map((task) => (<TaskLine key={task.taskKey()} task={task} setCurrentTask={this.setCurrentTask.bind(this)} switchMode={this.switchMode.bind(this)}/>));
 
     
-    render(){
-        return  <div>
-                    <TaskList task={defaultTask} isOpen={this.state.isOpenEdit} toggleFn = {this.toggleEdit.bind(this)} setCurrentTask={this.setCurrentTask.bind(this)} editModeFn={this.setMode.bind(this)}>
+    render(){ 
+        return  <div className="min-h-screen bg-gray-800 text-2xl text-gray-200 flex items-center flex-col">
+                    <div className="pt-2 w-1/2">
+                        <p className="text-start">Todo</p>        
+                    </div>  
+                    <TaskList task={defaultTask} mode={this.state.mode} setCurrentTask={this.setCurrentTask.bind(this)} switchMode={this.switchMode.bind(this)}>
                         {this.taskList}
                     </TaskList>
-                    <TaskEdit task={this.state.currentTask} isOpen={this.state.isOpenEdit} toggleFn = {this.toggleEdit.bind(this)} EditMode={this.state.editMode}/>
-                    <TaskDeleteConfirm task={this.state.currentTask} isOpen={this.state.isOpenDelete} toggleFn = {this.toggleDelete.bind(this)}/>
-                    {/* TODO Add an add compo or handle well edit compo */}
+                    <TaskEdit task={this.state.currentTask} mode={this.state.mode} switchMode={this.switchMode.bind(this)}/>
+                    <TaskDeleteConfirm task={this.state.currentTask} mode={this.state.mode} switchMode={this.switchMode.bind(this)}/>
                 </div>
     }
   }

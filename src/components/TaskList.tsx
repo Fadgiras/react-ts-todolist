@@ -3,34 +3,33 @@ import Task from "../models/Task";
 
 interface TaskProps{
     task : Task, 
-    isOpen : boolean,
-    toggleFn : Function,
+    mode : string,
     setCurrentTask : Function, 
-    editModeFn : Function,
-    children : any
+    children : any,
+    switchMode : Function
 }
 
 export default class TaskList extends Component<TaskProps, any>{
     constructor(props: any) {
         super(props);
-        this.state = {     
+        this.state = {
         };
     }
 
     toggle = () => {
-        this.props.editModeFn(false)
-        this.props.toggleFn()
+        this.props.switchMode("Add")
+    }
+
+    componentDidUpdate(prevProps: Readonly<TaskProps>, prevState: Readonly<any>, snapshot?: any): void {
+        console.log("Bonswaar")
     }
 
     render() {
-        return  <div className="min-h-screen bg-gray-800 text-2xl text-gray-200 ">
-                    <div className="block flex-col w-1/2 m-auto ">
-                        <div>
-                            <p>Todo</p>        
-                        </div>            
-                        <div className="flex h-fit mt-20 justify-end">
+        return  <div className="w-screen">
+            {this.props.mode == "List" ? <div className="block flex-col m-auto w-1/2">          
+                        <div className="flex h-fit justify-end">
                             <button type="button"
-                                    className="w-fit ml-auto text-gray-400 bg-transparent rounded-lg text-sm p-0.5 m-1 inline-flex items-center hover:bg-gray-600 hover:text-white"
+                                    className="w-fit ml-auto mt-14 text-gray-400 bg-transparent rounded-lg text-sm p-0.5 m-1 inline-flex items-center hover:bg-gray-600 hover:text-white"
                                     onClick={this.toggle}
                                     >
                                 <svg fill="gray" xmlns="http://www.w3.org/2000/svg" stroke="white" viewBox="0 0 128 128" width="40px" height="40px">
@@ -41,9 +40,10 @@ export default class TaskList extends Component<TaskProps, any>{
                         </div>
                         <div className='bg-gray-300 h-full mt-2 p-3 rounded-lg text-base text-black space-y-3 shadow-lg shadow-gray-500'>
                             {this.props.children}
-                        </div>      
-                    </div>
-                </div> 
+                        </div>
+                </div> :
+                null}
+        </div>
         
     }
 }

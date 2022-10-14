@@ -5,9 +5,8 @@ import StorageService from "../services/StorageService";
 
 interface TaskProps{
     task : Task, 
-    isOpen : boolean
-    toggleFn : Function,
-    EditMode : boolean
+    mode : string,
+    switchMode : Function
 }
 
 
@@ -34,7 +33,6 @@ export default class TaskEdit extends Component<TaskProps, any>{
 
     }
 
-
     handleDateChange = (Event: { target: any; }) =>{
         this.setState({date : Event.target.value})
         this.editTask.setDate(Event.target.value)
@@ -53,31 +51,44 @@ export default class TaskEdit extends Component<TaskProps, any>{
     }
     
     toggle = () => {
-        this.editTask.setId(this.props.task.getId())
-        new StorageService().editTask(this.editTask)
-        this.props.toggleFn()
+        if(this.EditCheck()){
+            this.editTask.setId(this.props.task.getId())
+            new StorageService().editTask(this.editTask)
+        }else{
+            this.editTask.setId(Object.keys(localStorage).length+1)
+            new StorageService().addTask(this.editTask)
+        }
+        
+        this.props.switchMode("List")
     }
 
-    modeSwitch(){
-        return this.props.EditMode ? "Edit Task : "+this.props.task.getName() : "Add Task"
+    EditCheck(){
+        return this.props.mode=="Edit" ? true : false
     }
-    
+
+    modeCheck(){
+        switch(this.props.mode){
+            case "Edit" : return true; 
+            case "Add" : return true;
+            default : return false
+        }
+    }
+
     render(): React.ReactNode {
         return <div> 
-            {this.props.isOpen ? 
+            {this.modeCheck() ? 
             <div className="fixed overflow-y-auto">
-                    <div className="fixed flex w-screen h-screen bg-gray-300 opacity-60"/>
-                    <div className="fixed bottom-0 top-0 left-0 right-0 m-auto flex w-1/2 bg-gray-400 h-fit rounded shadow-lg shadow-blue-800 flex flex-col items-center">
-                        <p className="mr-auto pt-2 pl-4 pb-4 text-bold text-xl"> {this.modeSwitch()}</p>
-                        <div className="w-2/3">
+                    <div className="fixed bottom-0 top-0 left-0 right-0 m-auto flex w-1/2 bg-gray-400 h-fit rounded shadow-lg shadow-blue-800 flex-col items-center text-black">
+                        <p className="mr-auto pt-2 pl-4 pb-4 text-bold text-xl"> {this.EditCheck() ? "Task : "+this.props.task.getName() : "Task Add"}</p>
+                        <div className="w-2/3 text-lg">
                             <p className="pl-2 pt-2">Task Name : </p>
-                            <input type="text" className="m-2 ring-2 pl-2 rounded border-black w-full" placeholder={this.props.EditMode  ? this.props.task.getName() : "Task title"} onChange={this.handleNameChange}/>
+                            <input type="text" className="m-2 ring-2 pl-2 rounded border-black w-full" placeholder={this.EditCheck()  ? this.props.task.getName() : "Task title"} onChange={this.handleNameChange}/>
                             
                             <p className="pl-2 pt-2">Task Category : </p>
-                            <input type="text" className="m-2 ring-2 pl-2 rounded border-black w-full" placeholder={this.props.EditMode  ? this.props.task.getCat() : "Task category"} onChange={this.handleCatChange}/>
+                            <input type="text" className="m-2 ring-2 pl-2 rounded border-black w-full" placeholder={this.EditCheck()  ? this.props.task.getCat() : "Task category"} onChange={this.handleCatChange}/>
                             
                             <p className="pl-2 pt-2">Task Description : </p>
-                            <textarea className="m-2 ring-2 pl-2 rounded border-black resize w-full" placeholder={this.props.EditMode  ? this.props.task.getDesc() : "Task description"} onChange={this.handleDescChange}/>
+                            <textarea className="m-2 ring-2 pl-2 rounded border-black resize w-full" placeholder={this.EditCheck()  ? this.props.task.getDesc() : "Task description"} onChange={this.handleDescChange}/>
 
                             <p className="pl-2 pt-2">Task Date : </p>
                             {/* Day's date displayed because of the defaultTask object in Todolist.tsx */}

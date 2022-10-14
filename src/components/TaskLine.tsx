@@ -5,26 +5,23 @@ import EditState from "./Todolist";
 
 interface TaskProps{
     task : Task
-    toggleEdit : Function,
-    toggleDelete : Function,
-    setCurrentTask : Function, 
-    editModeFn : Function
+    setCurrentTask : Function,
+    switchMode : Function
 
 }
 
 export default class TaskLine extends Component<TaskProps,EditState>{
 
     toggleDel(task : Task){
-        this.props.setCurrentTask(task) 
-        this.props.toggleDelete()
+        this.props.setCurrentTask(task)
         this.forceUpdate()
+        this.props.switchMode("Delete")
     }
 
     toggleEd(task : Task){
         this.props.setCurrentTask(task)
-        this.props.editModeFn(true)
-        this.props.toggleEdit()
         this.forceUpdate()
+        this.props.switchMode("Edit")
     }
     componentDidUpdate(prevProps: Readonly<TaskProps>, prevState: Readonly<EditState>, snapshot?: any): void {
         console.log("TLine")
