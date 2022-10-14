@@ -18,7 +18,6 @@ interface EditState{
     currentTask : Task,
     editMode : boolean,
     mode : string
-    // Add a mode state
 }
 
 export default class Todolist extends Component<any, EditState>{
@@ -54,21 +53,20 @@ export default class Todolist extends Component<any, EditState>{
     }
 
     //NB : instanciate a new obj to access a task
-    tasks = new StorageService().getTasks()
-    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<EditState>, snapshot?: any): void {
-        this.tasks = new StorageService().getTasks()
+    setTaskList(){
+        let tasks = new StorageService().getTasks()
+        let taskList = tasks.map((task) => (<TaskLine key={task.taskKey()} task={task} setCurrentTask={this.setCurrentTask.bind(this)} switchMode={this.switchMode.bind(this)}/>));
+        
+        return taskList
     }
 
-    taskList = this.tasks.map((task) => (<TaskLine key={task.taskKey()} task={task} setCurrentTask={this.setCurrentTask.bind(this)} switchMode={this.switchMode.bind(this)}/>));
-
-    
     render(){ 
         return  <div className="min-h-screen bg-gray-800 text-2xl text-gray-200 flex items-center flex-col">
                     <div className="pt-2 w-1/2">
                         <p className="text-start">Todo</p>        
                     </div>  
                     <TaskList task={defaultTask} mode={this.state.mode} setCurrentTask={this.setCurrentTask.bind(this)} switchMode={this.switchMode.bind(this)}>
-                        {this.taskList}
+                        {this.setTaskList()}
                     </TaskList>
                     <TaskEdit task={this.state.currentTask} mode={this.state.mode} switchMode={this.switchMode.bind(this)}/>
                     <TaskDeleteConfirm task={this.state.currentTask} mode={this.state.mode} switchMode={this.switchMode.bind(this)}/>
